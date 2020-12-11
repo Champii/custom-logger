@@ -4,18 +4,21 @@ use env_logger::{Builder, Color, Env};
 use log::{Level, LevelFilter};
 use std::io::Write;
 
-pub fn init_logger(level: u8) {
-    let env = Env::default();
-
-    let level_filter = match level {
-        0 => LevelFilter::Off,
+pub fn int_to_level_filter(level: u8) -> LevelFilter {
+    match level {
         1 => LevelFilter::Error,
         2 => LevelFilter::Warn,
         3 => LevelFilter::Info,
         4 => LevelFilter::Debug,
         5 => LevelFilter::Trace,
         _ => LevelFilter::Off,
-    };
+    }
+}
+
+pub fn init_logger(level: u8) {
+    let env = Env::default();
+
+    let level_filter = int_to_level_filter(level);
 
     let mut builder = Builder::from_env(env);
 
